@@ -6,10 +6,10 @@ weight = .3265
 bias = -1.523
 
 def softmax(z):
-    return 1 / (1+(math.e**z))
+    return 1 / (1+(math.e**-z))
 
 def deriv_soft(z):
-    return (-math.pow(math.e,z)) / math.pow(((1+(math.pow(math.e,z)))),2)
+    return (math.pow(math.e,-z)) / math.pow(((1+(math.pow(math.e,-z)))),2)
 
 def preNode(i,W,b):
     return (i*W)+b
@@ -37,7 +37,7 @@ old_z = preNode(initial,weight,bias)
 while cost(output,desired_output) >= 0.00005:
     output = softmax(preNode(initial,weight,bias))
     weight = old_weight - (0.001 * (deriv_cost(output,desired_output)*deriv_soft(old_z)*(initial)))
-    bias = old_bias - (0.001 * (deriv_cost(output,desired_output)*deriv_soft(old_z)*(old_weight*initial)))
+    bias = old_bias - (0.001 * (deriv_cost(output,desired_output)*deriv_soft(old_z)))
     old_weight = weight
     old_bias = bias
 
